@@ -1,5 +1,11 @@
 (() => {
     let app = document.getElementById('grid');
+
+    function resart() {
+        let table = document.getElementsByTagName('table')[0];
+        table.parentNode.removeChild(table);
+    }
+
     const createGrid = (x, y, bombPercentage) => {
         let totalBoxes = x * y;
         let bombs = (totalBoxes * bombPercentage) / 100;
@@ -100,7 +106,8 @@
     const createRow = () => document.createElement('tr');
 
     const lose = () => {
-        alert('YOU LOOSE');
+        window.alert('YOU LOST');
+        resart();
         //TODO on click bomb ded && afficher toutes bombes
     };
 
