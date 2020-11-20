@@ -1,0 +1,17 @@
+{
+  "name": "Deminator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/PirateSeal/Deminator.git",
+  "author": "PirateSeal <tcousin.pseal@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.2.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true
+  }
+}
