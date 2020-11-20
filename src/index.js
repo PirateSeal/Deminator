@@ -1,4 +1,36 @@
 (() => {
+    let app = document.getElementById('grid');
+    const createGrid = (x, y, bombPercentage) => {
+        let totalBoxes = x * y;
+        let bombs = (totalBoxes * bombPercentage) / 100;
+
+        let table = document.createElement('table');
+        for (let j = 0; j < y; j++) {
+            let row = createRow();
+            table.appendChild(row);
+            for (let i = 0; i < x; i++) {
+                let putBomb =
+                    Math.floor(Math.random() * 100) <= 25 && bombs > 0;
+
+                let col = createColumn(row);
+                if (putBomb) {
+                    bombs--;
+                    col.setAttribute('id', 'bomb');
+                    col.addEventListener(
+                        'click',
+                        () => lose() //TODO ajouter detecteur de click si bombe
+                    );
+                } else {
+                    col.setAttribute('id', 'vide');
+                    col.addEventListener('click', () => {
+                        revealEmpty(col);
+                    });
+                }
+            }
+        }
+        app.appendChild(table);
+    };
+
     function createGridConfig() {
         let sizes = document.createElement('div');
 
@@ -20,7 +52,10 @@
         let b = document.createElement('button');
         b.appendChild(document.createTextNode('GO'));
         b.addEventListener('click', () => {
-            console.log('SUBMIT');
+            let difficulty = document.getElementById('difficulty').value;
+            let x = document.getElementById('x').value;
+            let y = document.getElementById('y').value;
+            createGrid(x, y, difficulty);
         });
         return b;
     }
@@ -78,38 +113,5 @@
         col.style.backgroudColor = 'green';
     }
 
-    const createGrid = (x, y, bombNumber) => {
-        let bombs = bombNumber;
-        let emptyBoxes = x * y - bombNumber;
-        let putBomb;
-        let table = document.createElement('table');
-        for (let j = 0; j < y; j++) {
-            let row = createRow();
-            table.appendChild(row);
-            for (let i = 0; i < x; i++) {
-                putBomb = Math.floor(Math.random() * 100) <= 25 && bombs > 0;
-
-                let col = createColumn(row);
-                if (putBomb) {
-                    bombs--;
-                    col.setAttribute('id', 'bomb');
-                    col.addEventListener(
-                        'click',
-                        () => lose() //TODO ajouter detecteur de click si bombe
-                    );
-                } else {
-                    col.setAttribute('id', 'vide');
-                    col.addEventListener('click', () => {
-                        revealEmpty(col);
-                    });
-                }
-            }
-        }
-        return table;
-    };
-
-    let app = document.getElementById('grid');
-
     app.appendChild(createConfig());
-    app.appendChild(createGrid(10, 10, 20));
 })();
